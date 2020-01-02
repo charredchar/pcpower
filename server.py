@@ -26,7 +26,6 @@ for pin in switchpins:
    
 for pin in statuspins:
    GPIO.setup(pin, GPIO.IN)
-   GPIO.input(pin, GPIO.LOW)
 
 @app.route("/")
 def main():
