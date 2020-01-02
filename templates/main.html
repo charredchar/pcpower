@@ -21,5 +21,17 @@
       <a href="/{{pin}}/on" class="btn btn-block btn-lg btn-primary" role="button">Turn on</a></div></div>
    {% endif %}
    {% endfor %}
+
+   {% for pin in statuspins %}
+   <h2>{{ statuspins[pin].name }}
+   {% if switchpins[pin].state == true %}
+      is currently <strong>on</strong></h2><div class="row"><div class="col-md-2">
+      <a href="/{{pin}}/off" class="btn btn-block btn-lg btn-default" role="button">Turn off</a></div></div>
+   {% else %}
+      is currently <strong>off</strong></h2><div class="row"><div class="col-md-2">
+      <a href="/{{pin}}/on" class="btn btn-block btn-lg btn-primary" role="button">Turn on</a></div></div>
+   {% endif %}
+   {% endfor %}
+
 </body>
 </html>
