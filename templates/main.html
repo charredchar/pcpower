@@ -11,9 +11,9 @@
 
 <body>
    <h1>RPi Web Server</h1>
-   {% for pin in pins %}
-   <h2>{{ pins[pin].name }}
-   {% if pins[pin].state == true %}
+   {% for pin in switchpins %}
+   <h2>{{ switchpins[pin].name }}
+   {% if switchpins[pin].state == true %}
       is currently <strong>on</strong></h2><div class="row"><div class="col-md-2">
       <a href="/{{pin}}/off" class="btn btn-block btn-lg btn-default" role="button">Turn off</a></div></div>
    {% else %}
