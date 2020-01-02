@@ -6,26 +6,24 @@ app = Flask(__name__)
 GPIO.setmode(GPIO.BCM)
 
 # Create a dictionary called pins to store the pin number, name, and pin state:
-switchpins = {
+pins = {
    0 : {'name' : 'Blackbox - Power', 'state' : GPIO.HIGH},
-   1 : {'name' : 'Blackbox - Reset', 'state' : GPIO.HIGH},
-   3 : {'name' : 'KH-PrimeRadiant - Power', 'state' : GPIO.HIGH},
-   4 : {'name' : 'KH-PrimeRadiant - Reset', 'state' : GPIO.HIGH},
+   1 : {'name' : 'Blackbox - Reset', 'state' : GPIO.HIGH}
    }
 
-# Set each pin as an output and make it HIGH:
-for pin in switchpins:
+# Set each pin as an output and make it low:
+for pin in pins:
    GPIO.setup(pin, GPIO.OUT)
    GPIO.output(pin, GPIO.HIGH)
-   
+
 @app.route("/")
 def main():
    # For each pin, read the pin state and store it in the pins dictionary:
-   for pin in switchpins:
-      switchpins[pin]['state'] = GPIO.input(pin)
+   for pin in pins:
+      pins[pin]['state'] = GPIO.input(pin)
    # Put the pin dictionary into the template data dictionary:
    templateData = {
-      'switchpins' : switchpins
+      'pins' : pins
       }
    # Pass the template data into the template main.html and return it to the user
    return render_template('main.html', **templateData)
@@ -36,10 +34,10 @@ def action(changePin, action):
    # Convert the pin from the URL into an integer:
    changePin = int(changePin)
    # Get the device name for the pin being changed:
-   deviceName = switchpins[changePin]['name']
+   deviceName = pins[changePin]['name']
    # If the action part of the URL is "on," execute the code indented below:
    if action == "on":
-      # Set the pin low:
+      # Set the pin high:
       GPIO.output(changePin, GPIO.LOW)
       time.sleep(0.2)
       GPIO.output(changePin, GPIO.HIGH)
@@ -52,12 +50,12 @@ def action(changePin, action):
       message = "Turned " + deviceName + " off."
 
    # For each pin, read the pin state and store it in the pins dictionary:
-   for pin in switchpins:
-      switchpins[pin]['state'] = GPIO.output(pin)
+   for pin in pins:
+      pins[pin]['state'] = GPIO.input(pin)
 
    # Along with the pin dictionary, put the message into the template data dictionary:
    templateData = {
-      'switchpins' : switchpins
+      'pins' : pins
    }
 
    return render_template('main.html', **templateData)
