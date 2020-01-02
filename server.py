@@ -13,28 +13,16 @@ switchpins = {
    4 : {'name' : 'KH-PrimeRadiant - Reset', 'state' : GPIO.HIGH},
    }
 
-statuspins = {
-   22 : {'name' : 'Blackbox - Status', 'state' : GPIO.LOW},
-   23 : {'name' : 'KH-PrimeRadiant - Status', 'state' : GPIO.LOW},
-   24 : {'name' : 'Status(Reserved)', 'state' : GPIO.LOW},
-   25 : {'name' : 'Status(Reserve)d', 'state' : GPIO.LOW}
-   }
-
 # Set each pin as an output and make it HIGH:
 for pin in switchpins:
    GPIO.setup(pin, GPIO.OUT)
    GPIO.output(pin, GPIO.HIGH)
    
-for pin in statuspins:
-   GPIO.setup(pin, GPIO.IN)
-
 @app.route("/")
 def main():
    # For each pin, read the pin state and store it in the pins dictionary:
    for pin in switchpins:
       switchpins[pin]['state'] = GPIO.input(pin)
-   for pin in statuspins:
-      statuspins[pin]['state'] = GPIO.input(pin)
    # Put the pin dictionary into the template data dictionary:
    templateData = {
       'switchpins' : switchpins
@@ -65,10 +53,7 @@ def action(changePin, action):
 
    # For each pin, read the pin state and store it in the pins dictionary:
    for pin in switchpins:
-      switchpins[pin]['state'] = GPIO.input(pin)
-      
-   for pin in statuspins:
-      statuspins[pin]['state'] = GPIO.input(pin)
+      switchpins[pin]['state'] = GPIO.output(pin)
 
    # Along with the pin dictionary, put the message into the template data dictionary:
    templateData = {
