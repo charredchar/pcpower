@@ -37,8 +37,8 @@ def main():
       statuspins[pin]['state'] = GPIO.input(pin)
    # Put the pin dictionary into the template data dictionary:
    templateData = {
-      'switchpins' : switchpins
-      'statuspins' : statuspins
+      {'switchpins' : switchpins},
+      {'statuspins' : statuspins}
       }
    # Pass the template data into the template main.html and return it to the user
    return render_template('main.html', **templateData)
@@ -73,8 +73,8 @@ def action(changePin, action):
 
    # Along with the pin dictionary, put the message into the template data dictionary:
    templateData = {
-      'switchpins' : switchpins
-      'statuspins' : statuspins
+      {'switchpins' : switchpins},
+      {'statuspins' : statuspins}
    }
 
    return render_template('main.html', **templateData)
