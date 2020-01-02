@@ -72,8 +72,7 @@ def action(changePin, action):
 
    # Along with the pin dictionary, put the message into the template data dictionary:
    templateData = {
-      {'switchpins' : switchpins},
-      {'statuspins' : statuspins}
+      'switchpins' : switchpins
    }
 
    return render_template('main.html', **templateData)
